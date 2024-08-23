@@ -1,4 +1,4 @@
-package com.example.surfeillance_v2_frontend.data.entity;
+package com.example.surfeillance_v2_frontend.model.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

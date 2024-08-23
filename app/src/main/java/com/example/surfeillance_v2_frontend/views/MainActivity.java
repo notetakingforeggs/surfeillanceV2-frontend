@@ -1,7 +1,8 @@
-package com.example.surfeillance_v2_frontend;
+package com.example.surfeillance_v2_frontend.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.surfeillance_v2_frontend.R;
 
 public class MainActivity extends AppCompatActivity {
 
