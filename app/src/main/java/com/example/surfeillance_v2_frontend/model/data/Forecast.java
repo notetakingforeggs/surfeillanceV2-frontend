@@ -1,6 +1,4 @@
-package com.example.surfeillance_v2_frontend.model;
-
-import androidx.room.ColumnInfo;
+package com.example.surfeillance_v2_frontend.model.data;
 
 public class Forecast {
 

@@ -3,7 +3,7 @@ package com.example.surfeillance_v2_frontend.model.DAO;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-import com.example.surfeillance_v2_frontend.model.Forecast;
+import com.example.surfeillance_v2_frontend.model.data.Forecast;
 
 import java.util.List;
 
