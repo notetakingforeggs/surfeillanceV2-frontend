@@ -8,7 +8,7 @@ import com.example.surfeillance_v2_frontend.model.data.Forecast;
 import java.util.List;
 
 @Dao
-public interface forecastDAO {
+public interface ForecastDAO {
     @Query("SELECT * FROM forecasts")
     List<Forecast> getAll();
 
