@@ -49,7 +49,7 @@ public class ForecastEntity {
     @ColumnInfo(name = "wind_speed")
     private double windSpeed;
 
-    public ForecastEntity(int id, String spotId, String name, double latitude, double longitude, String creationTime, String date, String time, String waveDirection, double waveHeight, int wavePeriod, String windDirection, double windGusts, double windSpeed) {
+   /* public ForecastEntity(int id, String spotId, String name, double latitude, double longitude, String creationTime, String date, String time, String waveDirection, double waveHeight, int wavePeriod, String windDirection, double windGusts, double windSpeed) {
         this.id = id;
         this.spotId = spotId;
         this.name = name;
@@ -64,7 +64,7 @@ public class ForecastEntity {
         this.windDirection = windDirection;
         this.windGusts = windGusts;
         this.windSpeed = windSpeed;
-    }
+    }*/
 
     public ForecastEntity(String spotId, String name, double latitude, double longitude, String creationTime, String date, String time, String waveDirection, double waveHeight, int wavePeriod, String windDirection, double windGusts, double windSpeed) {
         this.spotId = spotId;
@@ -192,5 +192,25 @@ public class ForecastEntity {
 
     public void setWindSpeed(double windSpeed) {
         this.windSpeed = windSpeed;
+    }
+
+    @Override
+    public String toString() {
+        return "ForecastEntity{" +
+                "id=" + id +
+                ", spotId='" + spotId + '\'' +
+                ", name='" + name + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", creationTime='" + creationTime + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", waveDirection='" + waveDirection + '\'' +
+                ", waveHeight=" + waveHeight +
+                ", wavePeriod=" + wavePeriod +
+                ", windDirection='" + windDirection + '\'' +
+                ", windGusts=" + windGusts +
+                ", windSpeed=" + windSpeed +
+                '}';
     }
 }

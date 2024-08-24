@@ -6,7 +6,9 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
 import com.example.surfeillance_v2_frontend.model.DAO.ForecastDAO;
+import com.example.surfeillance_v2_frontend.model.DTO.ForecastDTO;
 import com.example.surfeillance_v2_frontend.model.data.Forecast;
+import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
 import com.example.surfeillance_v2_frontend.service.APIClient;
 import com.example.surfeillance_v2_frontend.service.ForecastService;
 import com.example.surfeillance_v2_frontend.service.SurfeillanceDB;
@@ -21,36 +23,53 @@ import java.util.List;
 public class ForecastRepository {
     private final MutableLiveData liveData = new MutableLiveData<>();
     private Application app;
-    private final ForecastService forecastService;
+    private ForecastService forecastService;
     private ForecastDAO forecastDAO;
 
     String TAG = "forecastrepo";
 
 
-    public ForecastRepository (Context context){
-        SurfeillanceDB db = Room.databaseBuilder(context.getApplicationContext(), SurfeillanceDB.class, "surfeillance").build();
+    public ForecastRepository(Application app) {
+        SurfeillanceDB db = SurfeillanceDB.getDB(app);
         forecastDAO = db.forecastDAO();
         forecastService = APIClient.getInstance().create(ForecastService.class);
+
+        Log.i(TAG, "ForecastRepository: just after retrofuilt creation");
     }
 
-    public void refreshForecastDB(){
-        Call<List<Forecast>> call = forecastService.getAllForecasts();
+    public void refreshForecastDB() {
+        Log.i(TAG, "refreshForecastDB: ");
 
-        call.enqueue(new Callback<List<Forecast>>() {
-            
+     /*   Call<List<ForecastDTO>> call = forecastService.getAllForecasts();
+       call.enqueue(new Callback<List<ForecastDTO>>() {
+
             //TODO probably do this ASYNC at some point using threading...
             @Override
-            public void onResponse(Call<List<Forecast>> call, Response<List<Forecast>> response) {
-                if(response.isSuccessful() && response.body() != null){
-                    forecastDAO.insertAll(response.body());
-                }
+            public void onResponse(Call<List<ForecastDTO>> call, Response<List<ForecastDTO>> response) {
+                    Log.i(TAG, "onResponse: " + response.body().toString());
+//                    forecastDAO.insertAll(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<Forecast>> call, Throwable throwable) {
+            public void onFailure(Call<List<ForecastDTO>> call, Throwable throwable) {
                 Log.i(TAG, "onFailure: ");
             }
         });
-    }
+    }*/
 
+        Call<String> call = forecastService.getForecastRaw();
+        Log.i(TAG, "refreshForecastDB: formed ");
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.i(TAG, response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable throwable) {
+                Log.i(TAG, "onFailure: ");
+            }
+        });
+
+    }
 }
