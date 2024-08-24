@@ -27,7 +27,10 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public void refreshLocalDB() {
         Log.i(TAG, "refreshLocalDB: ");
-        forecastRepository.refreshForecastDB();
+        forecastRepository.retrieveForecasts();
+        Log.i(TAG, "refreshLocalDB: forecasts retrieved?");
+//        forecastRepository.updateDB();
+        Log.i(TAG, "refreshLocalDB: db updateed?");
     }
 
     public LiveData<List<String>> getSampleForecastsFromRoom() {

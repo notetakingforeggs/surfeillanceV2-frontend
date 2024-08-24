@@ -1,7 +1,5 @@
 package com.example.surfeillance_v2_frontend.model.DTO;
 
-import com.google.gson.annotations.JsonAdapter;
-
 public class ForecastDTO {
     private Long forecastId;
     private String creationTime;
@@ -9,13 +7,13 @@ public class ForecastDTO {
     private String date;
     private String time;
     private Double waveHeight;
-    private Double waveDirection;
+    private String waveDirection;
     private Double wavePeriod;
     private Double windSpeed;
-    private Double windDirection;
+    private String windDirection;
     private Double windGusts;
 
-    public ForecastDTO(Long forecastId, String creationTime, SpotDTO spot, String date, String time, Double waveHeight, Double waveDirection, Double wavePeriod, Double windSpeed, Double windDirection, Double windGusts) {
+    public ForecastDTO(Long forecastId, String creationTime, SpotDTO spot, String date, String time, Double waveHeight, String waveDirection, Double wavePeriod, Double windSpeed, String windDirection, Double windGusts) {
         this.forecastId = forecastId;
         this.creationTime = creationTime;
         this.spot = spot;
@@ -69,11 +67,11 @@ public class ForecastDTO {
         this.waveHeight = waveHeight;
     }
 
-    public Double getWaveDirection() {
+    public String getWaveDirection() {
         return waveDirection;
     }
 
-    public void setWaveDirection(Double waveDirection) {
+    public void setWaveDirection(String waveDirection) {
         this.waveDirection = waveDirection;
     }
 
@@ -93,11 +91,11 @@ public class ForecastDTO {
         this.windSpeed = windSpeed;
     }
 
-    public Double getWindDirection() {
+    public String getWindDirection() {
         return windDirection;
     }
 
-    public void setWindDirection(Double windDirection) {
+    public void setWindDirection(String windDirection) {
         this.windDirection = windDirection;
     }
 

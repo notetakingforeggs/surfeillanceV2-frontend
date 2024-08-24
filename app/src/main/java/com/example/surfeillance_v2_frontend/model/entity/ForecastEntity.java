@@ -11,7 +11,7 @@ public class ForecastEntity {
     private int id;
 
     @ColumnInfo(name = "spot_id")
-    private String spotId;
+    private Long spotId;
 
     @ColumnInfo(name = "name")
     private String name;
@@ -38,7 +38,7 @@ public class ForecastEntity {
     private double waveHeight;
 
     @ColumnInfo(name = "wave_period")
-    private int wavePeriod;
+    private Double wavePeriod;
 
     @ColumnInfo(name = "wind_direction")
     private String windDirection;
@@ -66,7 +66,7 @@ public class ForecastEntity {
         this.windSpeed = windSpeed;
     }*/
 
-    public ForecastEntity(String spotId, String name, double latitude, double longitude, String creationTime, String date, String time, String waveDirection, double waveHeight, int wavePeriod, String windDirection, double windGusts, double windSpeed) {
+    public ForecastEntity(Long spotId, String name, double latitude, double longitude, String creationTime, String date, String time, String waveDirection, double waveHeight, Double wavePeriod, String windDirection, double windGusts, double windSpeed) {
         this.spotId = spotId;
         this.name = name;
         this.latitude = latitude;
@@ -90,11 +90,11 @@ public class ForecastEntity {
         this.id = id;
     }
 
-    public String getSpotId() {
+    public Long getSpotId() {
         return spotId;
     }
 
-    public void setSpotId(String spotId) {
+    public void setSpotId(Long spotId) {
         this.spotId = spotId;
     }
 
@@ -162,11 +162,11 @@ public class ForecastEntity {
         this.waveHeight = waveHeight;
     }
 
-    public int getWavePeriod() {
+    public Double getWavePeriod() {
         return wavePeriod;
     }
 
-    public void setWavePeriod(int wavePeriod) {
+    public void setWavePeriod(Double wavePeriod) {
         this.wavePeriod = wavePeriod;
     }
 

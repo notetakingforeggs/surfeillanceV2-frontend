@@ -12,11 +12,15 @@ import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
 import com.example.surfeillance_v2_frontend.service.APIClient;
 import com.example.surfeillance_v2_frontend.service.ForecastService;
 import com.example.surfeillance_v2_frontend.service.SurfeillanceDB;
+import com.example.surfeillance_v2_frontend.service.util.AppExecutors;
+import com.example.surfeillance_v2_frontend.service.util.ForecastEntityBuilder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
 
 // Lots of unchecked assignments and calls and things to have a look at.
 
@@ -25,6 +29,9 @@ public class ForecastRepository {
     private Application app;
     private ForecastService forecastService;
     private ForecastDAO forecastDAO;
+    private ForecastEntityBuilder forecastEntityBuilder;
+    private List<ForecastEntity> forecastEntities;
+    private final ExecutorService executor = AppExecutors.getInstance().database();
 
     String TAG = "forecastrepo";
 
@@ -37,17 +44,31 @@ public class ForecastRepository {
         Log.i(TAG, "ForecastRepository: just after retrofuilt creation");
     }
 
-    public void refreshForecastDB() {
-        Log.i(TAG, "refreshForecastDB: ");
+    public void retrieveForecasts() {
 
-     /*   Call<List<ForecastDTO>> call = forecastService.getAllForecasts();
-       call.enqueue(new Callback<List<ForecastDTO>>() {
+        Call<List<ForecastDTO>> call = forecastService.getAllForecasts();
+        call.enqueue(new Callback<List<ForecastDTO>>() {
 
             //TODO probably do this ASYNC at some point using threading...
             @Override
             public void onResponse(Call<List<ForecastDTO>> call, Response<List<ForecastDTO>> response) {
-                    Log.i(TAG, "onResponse: " + response.body().toString());
-//                    forecastDAO.insertAll(response.body());
+                Log.i(TAG, "onResponse: " + response.body().toString());
+                forecastEntityBuilder = new ForecastEntityBuilder();
+                forecastEntities = response.body().stream()
+                        .map(forecastEntityBuilder::buildForecast)
+                        .collect(Collectors.toList());
+                Log.i(TAG, "onResponse: forecast entities created");
+
+                Log.i(TAG, "updateDB: ");
+                if(forecastEntities!=null) {
+                    Log.i(TAG, "updateDB: inside if block");
+                    executor.execute(() -> {
+                        forecastDAO.insertAll(forecastEntities);
+                        String test = forecastDAO.getNamedOfForecastSpots().get(0);
+                        Log.i(TAG, "refreshLocalDB: " + test);
+                    });
+                }
+
             }
 
             @Override
@@ -55,21 +76,19 @@ public class ForecastRepository {
                 Log.i(TAG, "onFailure: ");
             }
         });
-    }*/
-
-        Call<String> call = forecastService.getForecastRaw();
-        Log.i(TAG, "refreshForecastDB: formed ");
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.i(TAG, response.body().toString());
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable throwable) {
-                Log.i(TAG, "onFailure: ");
-            }
-        });
-
     }
+
+//    public void updateDB() {
+//        Log.i(TAG, "updateDB: ");
+//        if(forecastEntities!=null) {
+//            Log.i(TAG, "updateDB: inside if block");
+//            executor.execute(() -> {
+//                forecastDAO.insertAll(forecastEntities);
+//                String test = forecastDAO.getNamedOfForecastSpots().get(0);
+//                Log.i(TAG, "refreshLocalDB: " + test);
+//            });
+//        }
+//    }
+
 }
+
