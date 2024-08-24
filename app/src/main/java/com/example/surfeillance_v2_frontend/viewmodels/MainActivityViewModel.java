@@ -1,14 +1,12 @@
 package com.example.surfeillance_v2_frontend.viewmodels;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 import com.example.surfeillance_v2_frontend.model.DAO.ForecastDAO;
-import com.example.surfeillance_v2_frontend.model.data.Forecast;
+import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
 import com.example.surfeillance_v2_frontend.model.repository.ForecastRepository;
 
 import java.util.List;
@@ -16,28 +14,25 @@ import java.util.List;
 public class MainActivityViewModel extends AndroidViewModel {
     private ForecastRepository forecastRepository;
      private ForecastDAO forecastDAO;
-      private MutableLiveData<List<String>> data;
+     private LiveData<List<ForecastEntity>> forecastsLiveData;
+
       public String TAG = "MainActivityViewModel";
 
     public MainActivityViewModel(Application application) {
         super(application);
-        data = new MutableLiveData<>();
         forecastRepository = new ForecastRepository(application);
+        forecastsLiveData = forecastRepository.getForecastsLiveData();
     }
 
+    // kind of like a getter, to be called by view to get the data to present in the UI
+    public LiveData<List<ForecastEntity>> getForecastsLiveData(){
+        return forecastsLiveData;
+    }
+
+    // maybe rename? also inserts into local db
     public void refreshLocalDB() {
         Log.i(TAG, "refreshLocalDB: ");
-        forecastRepository.retrieveForecasts();
-        Log.i(TAG, "refreshLocalDB: forecasts retrieved?");
-//        forecastRepository.updateDB();
-        Log.i(TAG, "refreshLocalDB: db updateed?");
+        forecastRepository.retrieveForecastsFromBackend();
     }
 
-    public LiveData<List<String>> getSampleForecastsFromRoom() {
-        new Thread(() -> {
-            List<String> forecasts = forecastDAO.getNamedOfForecastSpots();
-            data.postValue(forecasts);
-        }).start();
-        return data;
-    }
 }

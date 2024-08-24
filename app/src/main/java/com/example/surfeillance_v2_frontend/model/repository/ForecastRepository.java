@@ -1,13 +1,11 @@
 package com.example.surfeillance_v2_frontend.model.repository;
 
 import android.app.Application;
-import android.content.Context;
 import android.util.Log;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.Room;
 import com.example.surfeillance_v2_frontend.model.DAO.ForecastDAO;
 import com.example.surfeillance_v2_frontend.model.DTO.ForecastDTO;
-import com.example.surfeillance_v2_frontend.model.data.Forecast;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
 import com.example.surfeillance_v2_frontend.service.APIClient;
 import com.example.surfeillance_v2_frontend.service.ForecastService;
@@ -25,7 +23,7 @@ import java.util.stream.Collectors;
 // Lots of unchecked assignments and calls and things to have a look at.
 
 public class ForecastRepository {
-    private final MutableLiveData liveData = new MutableLiveData<>();
+    private final LiveData<List<ForecastEntity>> forecastsLiveData;
     private Application app;
     private ForecastService forecastService;
     private ForecastDAO forecastDAO;
@@ -39,12 +37,14 @@ public class ForecastRepository {
     public ForecastRepository(Application app) {
         SurfeillanceDB db = SurfeillanceDB.getDB(app);
         forecastDAO = db.forecastDAO();
+        forecastsLiveData = forecastDAO.getAll();
+
         forecastService = APIClient.getInstance().create(ForecastService.class);
 
         Log.i(TAG, "ForecastRepository: just after retrofuilt creation");
     }
 
-    public void retrieveForecasts() {
+    public void retrieveForecastsFromBackend() {
 
         Call<List<ForecastDTO>> call = forecastService.getAllForecasts();
         call.enqueue(new Callback<List<ForecastDTO>>() {
@@ -64,8 +64,9 @@ public class ForecastRepository {
                     Log.i(TAG, "updateDB: inside if block");
                     executor.execute(() -> {
                         forecastDAO.insertAll(forecastEntities);
-                        String test = forecastDAO.getNamedOfForecastSpots().get(0);
-                        Log.i(TAG, "refreshLocalDB: " + test);
+                        List<String> test = forecastDAO.getNamedOfForecastSpots();
+                        test.stream()
+                                .forEach(str-> Log.i(TAG, str));
                     });
                 }
 
@@ -78,17 +79,8 @@ public class ForecastRepository {
         });
     }
 
-//    public void updateDB() {
-//        Log.i(TAG, "updateDB: ");
-//        if(forecastEntities!=null) {
-//            Log.i(TAG, "updateDB: inside if block");
-//            executor.execute(() -> {
-//                forecastDAO.insertAll(forecastEntities);
-//                String test = forecastDAO.getNamedOfForecastSpots().get(0);
-//                Log.i(TAG, "refreshLocalDB: " + test);
-//            });
-//        }
-//    }
-
+    public LiveData<List<ForecastEntity>> getForecastsLiveData() {
+        return forecastsLiveData;
+    }
 }
 
