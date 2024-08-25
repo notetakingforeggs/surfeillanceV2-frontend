@@ -6,6 +6,7 @@ public class Forecast {
     private String name;
     private double latitude;
     private double longitude;
+    private Double beachFacing;
 
     private String creationTime;
     private String date;
@@ -17,11 +18,14 @@ public class Forecast {
     private Double windDirection;
     private Double windGusts;
 
-    public Forecast(String spotId, String name, double latitude, double longitude, String creationTime, String date, String time, Double waveHeight, Double waveDirection, Double wavePeriod, Double windSpeed, Double windDirection, Double windGusts) {
+
+
+    public Forecast(String spotId, String name, double latitude, double longitude, Double beachFacing, String creationTime, String date, String time, Double waveHeight, Double waveDirection, Double wavePeriod, Double windSpeed, Double windDirection, Double windGusts) {
         this.spotId = spotId;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.beachFacing = beachFacing;
         this.creationTime = creationTime;
         this.date = date;
         this.time = time;
@@ -135,5 +139,13 @@ public class Forecast {
 
     public void setWindGusts(Double windGusts) {
         this.windGusts = windGusts;
+    }
+
+    public Double getBeachFacing() {
+        return beachFacing;
+    }
+
+    public void setBeachFacing(Double beachFacing) {
+        this.beachFacing = beachFacing;
     }
 }

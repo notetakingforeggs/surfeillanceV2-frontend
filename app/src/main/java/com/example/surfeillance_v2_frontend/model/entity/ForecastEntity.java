@@ -22,6 +22,9 @@ public class ForecastEntity {
     @ColumnInfo(name = "longitude")
     private double longitude;
 
+    @ColumnInfo(name = "beach_facing")
+    private Double beachFacing;
+
     @ColumnInfo(name = "creation_time")
     private String creationTime;
 
@@ -32,7 +35,7 @@ public class ForecastEntity {
     private String time;
 
     @ColumnInfo(name = "wave_direction")
-    private String waveDirection;
+    private Double waveDirection;
 
     @ColumnInfo(name = "wave_height")
     private double waveHeight;
@@ -41,7 +44,7 @@ public class ForecastEntity {
     private Double wavePeriod;
 
     @ColumnInfo(name = "wind_direction")
-    private String windDirection;
+    private Double windDirection;
 
     @ColumnInfo(name = "wind_gusts")
     private double windGusts;
@@ -66,11 +69,12 @@ public class ForecastEntity {
         this.windSpeed = windSpeed;
     }*/
 
-    public ForecastEntity(Long spotId, String name, double latitude, double longitude, String creationTime, String date, String time, String waveDirection, double waveHeight, Double wavePeriod, String windDirection, double windGusts, double windSpeed) {
+    public ForecastEntity(Long spotId, String name, double latitude, double longitude, Double beachFacing, String creationTime, String date, String time, Double waveDirection, double waveHeight, Double wavePeriod, Double windDirection, double windGusts, double windSpeed) {
         this.spotId = spotId;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.beachFacing = beachFacing;
         this.creationTime = creationTime;
         this.date = date;
         this.time = time;
@@ -146,11 +150,11 @@ public class ForecastEntity {
         this.time = time;
     }
 
-    public String getWaveDirection() {
+    public Double getWaveDirection() {
         return waveDirection;
     }
 
-    public void setWaveDirection(String waveDirection) {
+    public void setWaveDirection(Double waveDirection) {
         this.waveDirection = waveDirection;
     }
 
@@ -170,11 +174,11 @@ public class ForecastEntity {
         this.wavePeriod = wavePeriod;
     }
 
-    public String getWindDirection() {
+    public Double getWindDirection() {
         return windDirection;
     }
 
-    public void setWindDirection(String windDirection) {
+    public void setWindDirection(Double windDirection) {
         this.windDirection = windDirection;
     }
 
@@ -194,14 +198,23 @@ public class ForecastEntity {
         this.windSpeed = windSpeed;
     }
 
+    public Double getBeachFacing() {
+        return beachFacing;
+    }
+
+    public void setBeachFacing(Double beachFacing) {
+        this.beachFacing = beachFacing;
+    }
+
     @Override
     public String toString() {
         return "ForecastEntity{" +
                 "id=" + id +
-                ", spotId='" + spotId + '\'' +
+                ", spotId=" + spotId +
                 ", name='" + name + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", beachFacing=" + beachFacing +
                 ", creationTime='" + creationTime + '\'' +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +

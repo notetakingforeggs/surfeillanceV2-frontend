@@ -18,6 +18,7 @@ public class ForecastEntityBuilder {
                 forecastDTO.getSpot().getName(),
                 forecastDTO.getSpot().getLatitude(),
                 forecastDTO.getSpot().getLongitude(),
+                forecastDTO.getSpot().getBeachFacing(),
                 forecastDTO.getCreationTime(),
                 forecastDTO.getDate(),
                 forecastDTO.getTime(),
@@ -26,7 +27,8 @@ public class ForecastEntityBuilder {
                 forecastDTO.getWavePeriod(),
                 forecastDTO.getWindDirection(),
                 forecastDTO.getWindGusts(),
-                forecastDTO.getWindSpeed());
+                forecastDTO.getWindSpeed()
+        );
         return forecastEntity;
     }
 }

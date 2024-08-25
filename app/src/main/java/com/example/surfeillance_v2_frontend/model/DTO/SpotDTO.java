@@ -5,12 +5,14 @@ public class SpotDTO {
     private String name;
     private Double latitude;
     private Double longitude;
+    private Double beachFacing;
 
-    public SpotDTO(Long spotId, String name, Double latitude, Double longitude) {
+    public SpotDTO(Long spotId, String name, Double latitude, Double longitude, Double beachFacing) {
         this.spotId = spotId;
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.beachFacing = beachFacing;
     }
 
     public Long getSpotId() {
@@ -45,6 +47,16 @@ public class SpotDTO {
         this.longitude = longitude;
     }
 
+    public Double getBeachFacing() {
+        return beachFacing;
+    }
+
+    public void setBeachFacing(Double beachFacing) {
+        this.beachFacing = beachFacing;
+    }
+
+
+
     @Override
     public String toString() {
         return "SpotDTO{" +
@@ -52,6 +64,7 @@ public class SpotDTO {
                 ", name='" + name + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
+                ", beachFacing=" + beachFacing +
                 '}';
     }
 }

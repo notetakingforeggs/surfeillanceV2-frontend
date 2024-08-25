@@ -7,13 +7,13 @@ public class ForecastDTO {
     private String date;
     private String time;
     private Double waveHeight;
-    private String waveDirection;
+    private Double waveDirection;
     private Double wavePeriod;
     private Double windSpeed;
-    private String windDirection;
+    private Double windDirection;
     private Double windGusts;
 
-    public ForecastDTO(Long forecastId, String creationTime, SpotDTO spot, String date, String time, Double waveHeight, String waveDirection, Double wavePeriod, Double windSpeed, String windDirection, Double windGusts) {
+    public ForecastDTO(Long forecastId, String creationTime, SpotDTO spot, String date, String time, Double waveHeight, Double waveDirection, Double wavePeriod, Double windSpeed, Double windDirection, Double windGusts) {
         this.forecastId = forecastId;
         this.creationTime = creationTime;
         this.spot = spot;
@@ -67,11 +67,11 @@ public class ForecastDTO {
         this.waveHeight = waveHeight;
     }
 
-    public String getWaveDirection() {
+    public Double getWaveDirection() {
         return waveDirection;
     }
 
-    public void setWaveDirection(String waveDirection) {
+    public void setWaveDirection(Double waveDirection) {
         this.waveDirection = waveDirection;
     }
 
@@ -91,11 +91,11 @@ public class ForecastDTO {
         this.windSpeed = windSpeed;
     }
 
-    public String getWindDirection() {
+    public Double getWindDirection() {
         return windDirection;
     }
 
-    public void setWindDirection(String windDirection) {
+    public void setWindDirection(Double windDirection) {
         this.windDirection = windDirection;
     }
 

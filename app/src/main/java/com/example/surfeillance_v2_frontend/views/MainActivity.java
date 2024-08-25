@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         viewModel.refreshLocalDB();
-        setContentView(R.layout.activity_main);
         viewModel.getForecastsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
             @Override
             public void onChanged(List<ForecastEntity> forecastEntities) {
