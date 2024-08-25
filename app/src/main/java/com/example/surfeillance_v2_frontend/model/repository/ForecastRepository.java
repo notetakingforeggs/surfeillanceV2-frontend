@@ -3,7 +3,6 @@ package com.example.surfeillance_v2_frontend.model.repository;
 import android.app.Application;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import com.example.surfeillance_v2_frontend.model.DAO.ForecastDAO;
 import com.example.surfeillance_v2_frontend.model.DTO.ForecastDTO;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
@@ -24,6 +23,7 @@ import java.util.stream.Collectors;
 
 public class ForecastRepository {
     private final LiveData<List<ForecastEntity>> forecastsLiveData;
+    private final LiveData<List<ForecastEntity>> firstDecentsLiveData;
     private Application app;
     private ForecastService forecastService;
     private ForecastDAO forecastDAO;
@@ -38,6 +38,7 @@ public class ForecastRepository {
         SurfeillanceDB db = SurfeillanceDB.getDB(app);
         forecastDAO = db.forecastDAO();
         forecastsLiveData = forecastDAO.getAll();
+        firstDecentsLiveData = forecastDAO.getFirstDecents();
 
         forecastService = APIClient.getInstance().create(ForecastService.class);
 
@@ -49,7 +50,6 @@ public class ForecastRepository {
         Call<List<ForecastDTO>> call = forecastService.getAllForecasts();
         call.enqueue(new Callback<List<ForecastDTO>>() {
 
-            //TODO probably do this ASYNC at some point using threading...
             @Override
             public void onResponse(Call<List<ForecastDTO>> call, Response<List<ForecastDTO>> response) {
                 Log.i(TAG, "onResponse: " + response.body().toString());
@@ -81,6 +81,10 @@ public class ForecastRepository {
 
     public LiveData<List<ForecastEntity>> getForecastsLiveData() {
         return forecastsLiveData;
+    }
+
+    public LiveData<List<ForecastEntity>> getFirstDecentsLiveData(){
+        return firstDecentsLiveData;
     }
 }
 

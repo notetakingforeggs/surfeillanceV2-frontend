@@ -14,7 +14,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private String TAG = "MainActivity";
     private MainActivityViewModel viewModel;
+
+   private List<ForecastEntity> forecasts;
+
     // rather than scheduling updates, check to see if timestamp of forecast data is x hours behind system time, and do api call if so each time new information is accessed?
+    // TODO get a sunset/sunrise api in to be able to select only for daylight forecasts
+    // maybe move a bunch of stuff ot the backend? and only send what i need to the front?
+    // put the isdecent function in the back
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +30,22 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         viewModel.refreshLocalDB();
+        /*viewModel.getForecastsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
+            @Override
+            public void onChanged(List<ForecastEntity> forecastEntities) {
+                for(ForecastEntity entity : forecastEntities){
+//                    Log.i(TAG, "onChanged: " + entity.getName());
+                }
+                System.out.println(forecastEntities.get(0).toString());
+            }
+        });*/
+
         viewModel.getForecastsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
             @Override
             public void onChanged(List<ForecastEntity> forecastEntities) {
-                Log.i(TAG, "onChanged: " + forecastEntities.get(0));
+                for(ForecastEntity entity : forecastEntities){
+                    System.out.println(entity);
+                }
             }
         });
     }

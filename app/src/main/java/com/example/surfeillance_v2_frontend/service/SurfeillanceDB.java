@@ -8,7 +8,7 @@ import com.example.surfeillance_v2_frontend.model.DAO.ForecastDAO;
 import com.example.surfeillance_v2_frontend.model.data.Forecast;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
 
-@Database(entities = {ForecastEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {ForecastEntity.class}, version = 3, exportSchema = false)
 public abstract class SurfeillanceDB extends RoomDatabase {
 
     public abstract ForecastDAO forecastDAO();

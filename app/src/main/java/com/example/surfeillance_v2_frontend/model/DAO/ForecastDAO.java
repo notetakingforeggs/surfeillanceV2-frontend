@@ -23,6 +23,18 @@ public interface ForecastDAO {
     @Query("SELECT DISTINCT name FROM forecasts ")
     List<String> getNamedOfForecastSpots();
 
+    // get first decent
+    @Query("SELECT *\n" +
+            "FROM forecasts AS t1\n" +
+            "WHERE id = (\n" +
+            "    SELECT MIN(id)\n" +
+            "    FROM forecasts AS t2\n" +
+            "    WHERE t1.name = t2.name\n" +
+            "      AND t2.is_decent = 1\n" +
+            ");"
+    )
+    LiveData<List<ForecastEntity>> getFirstDecents();
+
 
     // TODO search queries in here for later
 

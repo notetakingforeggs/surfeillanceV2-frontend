@@ -12,8 +12,9 @@ public class ForecastDTO {
     private Double windSpeed;
     private Double windDirection;
     private Double windGusts;
+    private Boolean isDecent;
 
-    public ForecastDTO(Long forecastId, String creationTime, SpotDTO spot, String date, String time, Double waveHeight, Double waveDirection, Double wavePeriod, Double windSpeed, Double windDirection, Double windGusts) {
+    public ForecastDTO(Long forecastId, String creationTime, SpotDTO spot, String date, String time, Double waveHeight, Double waveDirection, Double wavePeriod, Double windSpeed, Double windDirection, Double windGusts, Boolean isDecent) {
         this.forecastId = forecastId;
         this.creationTime = creationTime;
         this.spot = spot;
@@ -25,6 +26,7 @@ public class ForecastDTO {
         this.windSpeed = windSpeed;
         this.windDirection = windDirection;
         this.windGusts = windGusts;
+        this.isDecent = isDecent;
     }
 
     public Long getForecastId() {
@@ -115,10 +117,19 @@ public class ForecastDTO {
         this.creationTime = creationTime;
     }
 
+    public Boolean getDecent() {
+        return isDecent;
+    }
+
+    public void setDecent(Boolean decent) {
+        isDecent = decent;
+    }
+
     @Override
     public String toString() {
         return "ForecastDTO{" +
                 "forecastId=" + forecastId +
+                ", creationTime='" + creationTime + '\'' +
                 ", spot=" + spot +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
@@ -128,6 +139,7 @@ public class ForecastDTO {
                 ", windSpeed=" + windSpeed +
                 ", windDirection=" + windDirection +
                 ", windGusts=" + windGusts +
+                ", isDecent=" + isDecent +
                 '}';
     }
 }

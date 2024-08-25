@@ -15,13 +15,16 @@ public class MainActivityViewModel extends AndroidViewModel {
     private ForecastRepository forecastRepository;
      private ForecastDAO forecastDAO;
      private LiveData<List<ForecastEntity>> forecastsLiveData;
+     private LiveData<List<ForecastEntity>> firstDecentsLiveData;
 
       public String TAG = "MainActivityViewModel";
 
     public MainActivityViewModel(Application application) {
         super(application);
         forecastRepository = new ForecastRepository(application);
-        forecastsLiveData = forecastRepository.getForecastsLiveData();
+     //   forecastsLiveData = forecastRepository.getForecastsLiveData();
+        firstDecentsLiveData = forecastRepository.getFirstDecentsLiveData();
+
     }
 
     // kind of like a getter, to be called by view to get the data to present in the UI

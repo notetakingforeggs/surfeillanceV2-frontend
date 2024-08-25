@@ -27,7 +27,8 @@ public class ForecastEntityBuilder {
                 forecastDTO.getWavePeriod(),
                 forecastDTO.getWindDirection(),
                 forecastDTO.getWindGusts(),
-                forecastDTO.getWindSpeed()
+                forecastDTO.getWindSpeed(),
+                forecastDTO.getDecent()
         );
         return forecastEntity;
     }
