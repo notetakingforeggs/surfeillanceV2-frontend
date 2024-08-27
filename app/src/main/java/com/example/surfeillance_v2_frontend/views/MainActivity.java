@@ -30,17 +30,8 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         viewModel.refreshLocalDB();
-        /*viewModel.getForecastsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
-            @Override
-            public void onChanged(List<ForecastEntity> forecastEntities) {
-                for(ForecastEntity entity : forecastEntities){
-//                    Log.i(TAG, "onChanged: " + entity.getName());
-                }
-                System.out.println(forecastEntities.get(0).toString());
-            }
-        });*/
 
-        viewModel.getForecastsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
+        viewModel.getFirstDecentsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
             @Override
             public void onChanged(List<ForecastEntity> forecastEntities) {
                 for(ForecastEntity entity : forecastEntities){
@@ -48,5 +39,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /* TODO commenting this out for now, but likely to use it in later activities.
+        viewModel.getForecastsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
+            @Override
+            public void onChanged(List<ForecastEntity> forecastEntities) {
+                for(ForecastEntity entity : forecastEntities){
+                    System.out.println(entity);
+                }
+            }
+        });*/
     }
 }

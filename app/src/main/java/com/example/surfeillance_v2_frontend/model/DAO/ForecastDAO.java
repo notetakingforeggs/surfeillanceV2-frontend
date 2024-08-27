@@ -24,16 +24,10 @@ public interface ForecastDAO {
     List<String> getNamedOfForecastSpots();
 
     // get first decent
-    @Query("SELECT *\n" +
-            "FROM forecasts AS t1\n" +
-            "WHERE id = (\n" +
-            "    SELECT MIN(id)\n" +
-            "    FROM forecasts AS t2\n" +
-            "    WHERE t1.name = t2.name\n" +
-            "      AND t2.is_decent = 1\n" +
-            ");"
-    )
-    LiveData<List<ForecastEntity>> getFirstDecents();
+    @Query("SELECT * FROM forecasts f WHERE f.is_decent = 1 AND f.id = (SELECT MIN(f2.id) FROM forecasts f2 WHERE f2.spot_id = f.spot_id AND f2.is_decent = 1)")
+    LiveData<List<ForecastEntity>> getEarliestDecentForecastPerSpot();
+
+
 
 
     // TODO search queries in here for later

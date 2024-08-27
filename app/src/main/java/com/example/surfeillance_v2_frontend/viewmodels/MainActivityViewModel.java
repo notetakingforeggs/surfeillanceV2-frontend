@@ -32,6 +32,10 @@ public class MainActivityViewModel extends AndroidViewModel {
         return forecastsLiveData;
     }
 
+    public LiveData<List<ForecastEntity>> getFirstDecentsLiveData(){
+        return firstDecentsLiveData;
+    }
+
     // maybe rename? also inserts into local db
     public void refreshLocalDB() {
         Log.i(TAG, "refreshLocalDB: ");
