@@ -1,4 +1,6 @@
 package com.example.surfeillance_v2_frontend.model.data;
+// TODO decide whether it makes sense to use this class at all? i think i can just use the entity class for now.
+
 
 public class Forecast {
 
