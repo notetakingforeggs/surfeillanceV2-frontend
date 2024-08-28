@@ -5,46 +5,60 @@
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
 >
-    
+
     <data>
         <variable name="forecast" type="com.example.surfeillance_v2_frontend.model.entity.ForecastEntity"/>
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".views.mainActivity.MainActivity">
-
-    <ImageView
-            android:id="@+id/logoImage"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:background="@android:color/transparent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-    />
-
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              app:layout_constraintStart_toEndOf="@id/logoImage"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintTop_toTopOf="parent"
-              app:layout_constraintBottom_toBottomOf="@id/logoImage"
-              android:text="Outlook..."
-              android:letterSpacing="0.4"
-              android:textAlignment="center"
-              android:gravity="center"
-              android:id = "@+id/title"
-              android:textSize="38dp"
-    />
-
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/logoImage"
-            app:layout_constraintBottom_toBottomOf="parent"
-    />
+            android:layout_height="match_parent"
+            tools:context=".views.mainActivity.MainActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  app:layout_constraintStart_toEndOf="@id/logoImage"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintTop_toTopOf="parent"
+                  app:layout_constraintBottom_toBottomOf="@id/logoImage"
+                  android:text="Outlook..."
+                  android:letterSpacing="0.4"
+                  android:textAlignment="center"
+                  android:gravity="center"
+                  android:id="@+id/title"
+                  android:textSize="38sp"
+        />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/logoImage"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="visible"
+        />
+        <TextView android:id="@+id/apology"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  app:layout_constraintTop_toTopOf="parent"
+                  android:paddingHorizontal="5dp"
+                  android:textSize="32sp"
+                  android:text="@string/apology"
+                  android:visibility="gone"
+
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

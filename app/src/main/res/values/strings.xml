@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Surfeillance-V2-Frontend</string>
+    <string name="apology">No decent surf coming up at your chosen spots...</string>
 </resources>
