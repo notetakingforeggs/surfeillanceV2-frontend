@@ -4,6 +4,6 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
+    android:fontFamily="@font/roboto"
     <style name="Theme.SurfeillanceV2Frontend" parent="Base.Theme.SurfeillanceV2Frontend"/>
 </resources>

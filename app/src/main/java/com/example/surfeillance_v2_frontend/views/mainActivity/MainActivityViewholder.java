@@ -18,7 +18,7 @@ public class MainActivityViewholder extends RecyclerView.ViewHolder {
         super(itemView);
         spotName = itemView.findViewById(R.id.spotTitle);
         date = itemView.findViewById(R.id.date);
-        isDecent = itemView.findViewById(R.id.isDecent);
+//        isDecent = itemView.findViewById(R.id.isDecent);
 
     }
 }
