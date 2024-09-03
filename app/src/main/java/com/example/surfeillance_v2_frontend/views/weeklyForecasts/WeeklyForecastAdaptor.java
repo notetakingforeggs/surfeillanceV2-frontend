@@ -59,6 +59,13 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
         return ("Waves: " + forecast.getWaveHeight() + " M, at " + forecast.getWavePeriod() + " seconds, wind at " + forecast.getWindSpeed());
     }
 
+
+    public void updateForecasts(List<ForecastEntity> newForecasts) {
+        this.forecastEntities.clear();
+        this.forecastEntities.addAll(newForecasts);
+        notifyDataSetChanged();
+    }
+
     public static class ForecastViewHolder extends RecyclerView.ViewHolder {
         TextView forecastDate, forecast6amDetails, forecast12pmDetails, forecast6pmDetails;
 

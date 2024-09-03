@@ -13,7 +13,6 @@ import java.util.List;
 
 public class MainActivityViewModel extends AndroidViewModel {
     private ForecastRepository forecastRepository;
-     private ForecastDAO forecastDAO;
      private LiveData<List<ForecastEntity>> forecastsLiveData;
      private LiveData<List<ForecastEntity>> firstDecentsLiveData;
 
@@ -28,9 +27,6 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     // kind of like a getter, to be called by view to get the data to present in the UI
-    public LiveData<List<ForecastEntity>> getForecastsLiveData(){
-        return forecastsLiveData;
-    }
 
     public LiveData<List<ForecastEntity>> getFirstDecentsLiveData(){
         return firstDecentsLiveData;

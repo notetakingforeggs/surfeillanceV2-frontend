@@ -14,6 +14,9 @@ public interface ForecastDAO {
     @Query("SELECT * FROM forecasts")
     LiveData<List<ForecastEntity>> getAll();
 
+    @Query("SELECT * FROM forecasts WHERE spot_id = :spot_id ")
+    LiveData<List<ForecastEntity>> getAllBySpotId(long spot_id);
+
     @Insert
     void insertAll(List<ForecastEntity> forecasts);
 

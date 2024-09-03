@@ -1,7 +1,10 @@
 package com.example.surfeillance_v2_frontend.views.mainActivity;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.lifecycle.Observer;
@@ -11,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.surfeillance_v2_frontend.R;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
 import com.example.surfeillance_v2_frontend.viewmodels.MainActivityViewModel;
+import com.example.surfeillance_v2_frontend.views.weeklyForecasts.WeeklyForecastActivity;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -39,10 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         apology = findViewById(R.id.apology);
-
+        forecasts = new ArrayList<ForecastEntity>();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // adaptor takes this as the listener asis class now implements the listener interface so is a listener?
         adaptor = new MainActivityAdaptor(new ArrayList<>());
+
         recyclerView.setAdapter(adaptor);
 
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
@@ -55,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<ForecastEntity> forecastEntities) {
                 for (ForecastEntity entity : forecastEntities) {
                     System.out.println(entity.getName() + "has decent surf coming up");
+                    forecasts.add(entity);
                 }
                 apology.setVisibility(forecastEntities.isEmpty() ? View.VISIBLE : View.GONE);
                 recyclerView.setVisibility(forecastEntities.isEmpty() ? View.INVISIBLE : View.VISIBLE);
@@ -63,14 +70,18 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        /* TODO commenting this out for now, but likely to use it in later activities.
-        viewModel.getForecastsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
+        adaptor.setOnItemCLickListener(new OnItemClickListener() {
             @Override
-            public void onChanged(List<ForecastEntity> forecastEntities) {
-                for(ForecastEntity entity : forecastEntities){
-                    System.out.println(entity);
-                }
+            public void onItemClick(int position) {
+                Intent intent = new Intent(MainActivity.this, WeeklyForecastActivity.class);
+                Long spotId = forecasts.get(position).getSpotId();
+                Log.i(TAG, "onItemClick: " + spotId);
+                intent.putExtra("spotID", spotId);
+                Toast.makeText(getApplicationContext(), "Taking you to weekly forecast for " + forecasts.get(position).getName(), Toast.LENGTH_SHORT).show();
+                startActivity(intent);
             }
-        });*/
+        });
     }
+
+
 }

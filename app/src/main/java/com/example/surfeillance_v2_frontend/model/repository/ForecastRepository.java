@@ -15,7 +15,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -24,15 +23,15 @@ import java.util.stream.Collectors;
 // Lots of unchecked assignments and calls and things to have a look at.
 
 public class ForecastRepository {
-    //    private final LiveData<List<ForecastEntity>> forecastsLiveData;
-    private final LiveData<List<ForecastEntity>> firstDecentsLiveData;
+    private LiveData<List<ForecastEntity>> forecastsLiveData;
+    private LiveData<List<ForecastEntity>> firstDecentsLiveData;
     private Application app;
     private ForecastService forecastService;
     private ForecastDAO forecastDAO;
     private ForecastEntityBuilder forecastEntityBuilder;
     private List<ForecastEntity> forecastEntities;
     private final ExecutorService executor = AppExecutors.getInstance().database();
-
+    private long spotId;
     // hard coding list of spot ids but in future this will be taken either from profile preferences, or x closest spots.
     // imaginging at some point having the ability to send a list of spot ids into the DAO and it will bring back live data for only those spots, but later..
     private List<Long> spotIds = Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L);
@@ -43,12 +42,17 @@ public class ForecastRepository {
     public ForecastRepository(Application app) {
         SurfeillanceDB db = SurfeillanceDB.getDB(app);
         forecastDAO = db.forecastDAO();
-//        forecastsLiveData = forecastDAO.getAll();
         firstDecentsLiveData = forecastDAO.getEarliestDecentForecastPerSpot();
 
         forecastService = APIClient.getInstance().create(ForecastService.class);
 
         Log.i(TAG, "ForecastRepository: just after retrofuilt creation");
+    }
+
+    public ForecastRepository(Application app, long spotId) {
+        SurfeillanceDB db = SurfeillanceDB.getDB(app);
+        forecastDAO = db.forecastDAO();
+        forecastsLiveData = forecastDAO.getAllBySpotId(spotId);
     }
 
     public void retrieveForecastsFromBackend() {
@@ -85,11 +89,13 @@ public class ForecastRepository {
         });
     }
 
-//    public LiveData<List<ForecastEntity>> getForecastsLiveData() {
-//        return forecastsLiveData;
-//    }
+    // dont need params as constructor takes spot id so forecast live data is already for the spot and there for the taking.
+    public LiveData<List<ForecastEntity>> getForecastsLiveDataBySpotId() {
+        return forecastsLiveData;
+    }
 
-    public LiveData<List<ForecastEntity>> getFirstDecentsLiveData() {
+    public LiveData<List<ForecastEntity>> getFirstDecentsLiveData()
+    {
         return firstDecentsLiveData;
     }
 }

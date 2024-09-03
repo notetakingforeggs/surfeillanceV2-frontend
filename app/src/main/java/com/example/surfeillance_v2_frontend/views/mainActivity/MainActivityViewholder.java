@@ -14,11 +14,19 @@ public class MainActivityViewholder extends RecyclerView.ViewHolder {
     public TextView isDecent;
 
 
-    public MainActivityViewholder(@NonNull @NotNull View itemView) {
+    public MainActivityViewholder(@NonNull @NotNull View itemView, OnItemClickListener listener) {
         super(itemView);
         spotName = itemView.findViewById(R.id.spotTitle);
         date = itemView.findViewById(R.id.date);
-//        isDecent = itemView.findViewById(R.id.isDecent);
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 listener.onItemClick(getAdapterPosition());
+            }
+        });
+        //        isDecent = itemView.findViewById(R.id.isDecent);
+
 
     }
 }
