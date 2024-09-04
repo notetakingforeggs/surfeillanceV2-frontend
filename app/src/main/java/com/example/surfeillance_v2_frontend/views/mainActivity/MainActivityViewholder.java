@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 public class MainActivityViewholder extends RecyclerView.ViewHolder {
     public MaterialTextView spotName;
     public MaterialTextView date;
-    public TextView isDecent;
 
 
     public MainActivityViewholder(@NonNull @NotNull View itemView, OnItemClickListener listener) {
@@ -25,7 +24,6 @@ public class MainActivityViewholder extends RecyclerView.ViewHolder {
                  listener.onItemClick(getAdapterPosition());
             }
         });
-        //        isDecent = itemView.findViewById(R.id.isDecent);
 
 
     }

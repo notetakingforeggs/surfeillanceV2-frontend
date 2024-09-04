@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-import com.example.surfeillance_v2_frontend.model.data.Forecast;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
 
 import java.util.List;
@@ -17,6 +16,9 @@ public interface ForecastDAO {
     @Query("SELECT * FROM forecasts WHERE spot_id = :spot_id ")
     LiveData<List<ForecastEntity>> getAllBySpotId(long spot_id);
 
+    @Query("SELECT * FROM forecasts WHERE spot_id = :spot_id AND time IN (:times)")
+    LiveData<List<ForecastEntity>> getSimpleDayForecast(long spot_id, List<String> times);
+
     @Insert
     void insertAll(List<ForecastEntity> forecasts);
 
@@ -24,7 +26,7 @@ public interface ForecastDAO {
     void deleteAll();
 
     @Query("SELECT DISTINCT name FROM forecasts ")
-    List<String> getNamedOfForecastSpots();
+    List<String> getNamesOfForecastSpots();
 
     // get first decent
     @Query("SELECT * FROM forecasts f WHERE f.is_decent = 1 AND f.id = (SELECT MIN(f2.id) FROM forecasts f2 WHERE f2.spot_id = f.spot_id AND f2.is_decent = 1)")

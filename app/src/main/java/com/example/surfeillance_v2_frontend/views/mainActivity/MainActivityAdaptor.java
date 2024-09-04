@@ -35,11 +35,9 @@ public class MainActivityAdaptor extends RecyclerView.Adapter<MainActivityViewho
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull MainActivityViewholder mainActivityViewholder, int i) {
-        //TODO here i think is where I can put an apology page if there is no good surf.
-        // No need to displayy is decent here as the sql query filters for that. maybe display that day and the next x days.
+    public void onBindViewHolder(@NonNull @NotNull MainActivityViewholder mainActivityViewholder, int position) {
 
-        ForecastEntity forecast = forecastEntities.get(i);
+        ForecastEntity forecast = forecastEntities.get(position);
         mainActivityViewholder.spotName.setText(forecast.getName());
         mainActivityViewholder.date.setText(forecast.getDate());
     }

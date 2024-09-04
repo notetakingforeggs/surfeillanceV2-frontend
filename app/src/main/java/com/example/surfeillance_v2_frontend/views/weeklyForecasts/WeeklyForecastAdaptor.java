@@ -1,6 +1,7 @@
 package com.example.surfeillance_v2_frontend.views.weeklyForecasts;
 
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,14 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
 
     public WeeklyForecastAdaptor(List<ForecastEntity> forecastEntities) {
         this.forecastEntities = forecastEntities;
+        System.out.println("constructor of adaptor, forecast list size is " + forecastEntities.size());
     }
 
     @NonNull
+    @NotNull
     @Override
     // on creation of the recyclerview and everything else:...
-    public @NotNull ForecastViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public ForecastViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         // Inflating the layout of the recycler view item (making it into a view object in memory)
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.weekly_forecast_item, parent, false);
 
@@ -34,20 +37,22 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ForecastViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull ForecastViewHolder forecastViewHolder, int position) {
         // for the nth item in the recycler view, get the nth forecast from the list of entites we are putting in the recycler view
-        ForecastEntity forecast = forecastEntities.get(position);
-        // set the date
-        holder.forecastDate.setText(forecast.getDate());
+        Log.i("what position?", "onBindViewHolder: " + position);
+        int forecastGroupStartingNumber = ((position ) * 3);
 
-        // set info for each time slot
-        if (forecast.getTime() == "06:00") {
-            holder.forecast6amDetails.setText(compileTinyForecast(forecast));
-        } else if (forecast.getTime() == "12:00") {
-            holder.forecast12pmDetails.setText(compileTinyForecast(forecast));
-        } else if (forecast.getTime() == "18:00") {
-            holder.forecast6pmDetails.setText(compileTinyForecast(forecast));
-        }
+        ForecastEntity sixAmForecast = forecastEntities.get(forecastGroupStartingNumber);
+        ForecastEntity twelvePmForecast = forecastEntities.get(forecastGroupStartingNumber + 1);
+        ForecastEntity sixPmForecast = forecastEntities.get(forecastGroupStartingNumber + 2);
+
+
+        forecastViewHolder.forecastDate.setText(sixAmForecast.getDate());
+        // TODO there is an issue with out of bounds error for max size
+
+        forecastViewHolder.forecast6amDetails.setText(compileTinyForecast(sixAmForecast));
+        forecastViewHolder.forecast12pmDetails.setText(compileTinyForecast(twelvePmForecast));
+        forecastViewHolder.forecast6pmDetails.setText(compileTinyForecast(sixPmForecast));
     }
 
     @Override

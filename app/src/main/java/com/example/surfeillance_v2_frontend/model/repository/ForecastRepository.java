@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class ForecastRepository {
     private LiveData<List<ForecastEntity>> forecastsLiveData;
     private LiveData<List<ForecastEntity>> firstDecentsLiveData;
+    private LiveData<List<ForecastEntity>> simpleDayForecasts;
     private Application app;
     private ForecastService forecastService;
     private ForecastDAO forecastDAO;
@@ -35,6 +36,9 @@ public class ForecastRepository {
     // hard coding list of spot ids but in future this will be taken either from profile preferences, or x closest spots.
     // imaginging at some point having the ability to send a list of spot ids into the DAO and it will bring back live data for only those spots, but later..
     private List<Long> spotIds = Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L);
+
+   // TODO later this format would be good ot refactor into the daily forecast to enable daylight forecasts only
+    private List<String> simpleTimes = Arrays.asList("06:00", "12:00", "18:00");
 
     String TAG = "forecastrepo";
 
@@ -52,7 +56,7 @@ public class ForecastRepository {
     public ForecastRepository(Application app, long spotId) {
         SurfeillanceDB db = SurfeillanceDB.getDB(app);
         forecastDAO = db.forecastDAO();
-        forecastsLiveData = forecastDAO.getAllBySpotId(spotId);
+        simpleDayForecasts = forecastDAO.getSimpleDayForecast(spotId, this.simpleTimes);
     }
 
     public void retrieveForecastsFromBackend() {
@@ -73,8 +77,9 @@ public class ForecastRepository {
                 if (forecastEntities != null) {
                     Log.i(TAG, "updateDB: inside if block");
                     executor.execute(() -> {
+                        forecastDAO.deleteAll();
                         forecastDAO.insertAll(forecastEntities);
-                        List<String> test = forecastDAO.getNamedOfForecastSpots();
+                        List<String> test = forecastDAO.getNamesOfForecastSpots();
                         test.stream()
                                 .forEach(str -> Log.i(TAG, str));
                     });
@@ -93,6 +98,8 @@ public class ForecastRepository {
     public LiveData<List<ForecastEntity>> getForecastsLiveDataBySpotId() {
         return forecastsLiveData;
     }
+
+    public LiveData<List<ForecastEntity>> getSimpleDayForecasts(){ return simpleDayForecasts;}
 
     public LiveData<List<ForecastEntity>> getFirstDecentsLiveData()
     {

@@ -20,7 +20,7 @@ public class WeeklyForecastsViewModel extends AndroidViewModel {
         super(application);
         Log.i(TAG, "WeeklyForecastsViewModel: ");
         forecastRepository = new ForecastRepository(application, spotId);
-        forecastsLiveData = forecastRepository.getForecastsLiveDataBySpotId();
+        forecastsLiveData = forecastRepository.getSimpleDayForecasts();
     }
 
     public LiveData<List<ForecastEntity>> getForecastsLiveData(){
