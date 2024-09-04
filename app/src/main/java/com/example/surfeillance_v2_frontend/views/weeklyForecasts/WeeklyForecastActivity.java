@@ -1,10 +1,7 @@
 package com.example.surfeillance_v2_frontend.views.weeklyForecasts;
-
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.widget.TextView;
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,10 +11,8 @@ import com.example.surfeillance_v2_frontend.R;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
 import com.example.surfeillance_v2_frontend.viewmodels.WeeklyForecastViewModelFactory;
 import com.example.surfeillance_v2_frontend.viewmodels.WeeklyForecastsViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class WeeklyForecastActivity extends AppCompatActivity {
@@ -28,7 +23,6 @@ public class WeeklyForecastActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private long spotID;
     private TextView spotName;
-
 
 
     @Override
@@ -51,12 +45,12 @@ public class WeeklyForecastActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this, factory).get(WeeklyForecastsViewModel.class);
         viewModel.getForecastsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
-           @Override
-           public void onChanged(List<ForecastEntity> forecastEntities) {
-               System.out.println(forecastEntities.size() + " forecasts for one spot?");
-               spotName.setText(forecastEntities.get(0).getName());
-               adaptor.updateForecasts(forecastEntities);
-           }
-       });
+            @Override
+            public void onChanged(List<ForecastEntity> forecastEntities) {
+                System.out.println(forecastEntities.size() + " forecasts for one spot?");
+                spotName.setText(forecastEntities.get(0).getName());
+                adaptor.updateForecasts(forecastEntities);
+            }
+        });
     }
 }

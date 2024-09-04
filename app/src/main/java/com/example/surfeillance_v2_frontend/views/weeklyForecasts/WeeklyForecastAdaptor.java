@@ -57,11 +57,13 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
 
     @Override
     public int getItemCount() {
-        return forecastEntities.size();
+        return forecastEntities.size()/3;
     }
 
+    // TODO replace this with is decent maybe thumbs up or green circle vs red circle
     public String compileTinyForecast(ForecastEntity forecast) {
-        return ("Waves: " + forecast.getWaveHeight() + " M, at " + forecast.getWavePeriod() + " seconds, wind at " + forecast.getWindSpeed());
+
+        return ("WaveHeight: " + forecast.getWaveHeight() + " M\n" + "Period: " + forecast.getWavePeriod() + "S\n" + "Wind: " + forecast.getWindSpeed() + "Mph");
     }
 
 
