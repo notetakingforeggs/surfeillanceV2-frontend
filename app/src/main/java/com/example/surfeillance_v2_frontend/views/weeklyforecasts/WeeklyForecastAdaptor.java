@@ -1,6 +1,5 @@
-package com.example.surfeillance_v2_frontend.views.weeklyForecasts;
+package com.example.surfeillance_v2_frontend.views.weeklyforecasts;
 
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,17 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.surfeillance_v2_frontend.R;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
+import com.example.surfeillance_v2_frontend.views.OnItemClickListener;
 import org.jetbrains.annotations.NotNull;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import java.util.List;
 
 public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAdaptor.ForecastViewHolder> {
 
     private List<ForecastEntity> forecastEntities;
+    private OnItemClickListener mListener;
 
     public WeeklyForecastAdaptor(List<ForecastEntity> forecastEntities) {
         this.forecastEntities = forecastEntities;
-        System.out.println("constructor of adaptor, forecast list size is " + forecastEntities.size());
     }
 
     @NonNull
@@ -33,21 +36,27 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
 
         // sending this view into the constructor of the recyclerview viewholder so now the various different views from ids
         // are also now object attributes in memory
-        return new ForecastViewHolder(view);
+        return new ForecastViewHolder(view, mListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ForecastViewHolder forecastViewHolder, int position) {
         // for the nth item in the recycler view, get the nth forecast from the list of entites we are putting in the recycler view
         Log.i("what position?", "onBindViewHolder: " + position);
-        int forecastGroupStartingNumber = ((position ) * 3);
+        int forecastGroupStartingNumber = ((position) * 3);
 
         ForecastEntity sixAmForecast = forecastEntities.get(forecastGroupStartingNumber);
         ForecastEntity twelvePmForecast = forecastEntities.get(forecastGroupStartingNumber + 1);
         ForecastEntity sixPmForecast = forecastEntities.get(forecastGroupStartingNumber + 2);
 
-
-        forecastViewHolder.forecastDate.setText(sixAmForecast.getDate());
+        LocalDate localDate = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            localDate = LocalDate.parse(sixAmForecast.getDate());
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+            forecastViewHolder.forecastDate.setText(dayOfWeek.toString());
+        }
         // TODO there is an issue with out of bounds error for max size
 
         forecastViewHolder.forecast6amDetails.setText(compileTinyForecast(sixAmForecast));
@@ -57,7 +66,7 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
 
     @Override
     public int getItemCount() {
-        return forecastEntities.size()/3;
+        return forecastEntities.size() / 3;
     }
 
     // TODO replace this with is decent maybe thumbs up or green circle vs red circle
@@ -76,14 +85,23 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
     public static class ForecastViewHolder extends RecyclerView.ViewHolder {
         TextView forecastDate, forecast6amDetails, forecast12pmDetails, forecast6pmDetails;
 
-        public ForecastViewHolder(@NonNull @NotNull View itemView) {
+        public ForecastViewHolder(@NonNull @NotNull View itemView, OnItemClickListener listener) {
             super(itemView);
             forecastDate = itemView.findViewById(R.id.forecast_date);
             forecast6amDetails = itemView.findViewById(R.id.forecast_6am_details);
             forecast6pmDetails = itemView.findViewById(R.id.forecast_6pm_details);
             forecast12pmDetails = itemView.findViewById(R.id.forecast_12pm_details);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(getAdapterPosition());
+                }
+            });
+
         }
     }
-
+public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener = listener;
+}
 }

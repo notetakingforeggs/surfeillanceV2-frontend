@@ -1,10 +1,10 @@
-package com.example.surfeillance_v2_frontend.views.mainActivity;
+package com.example.surfeillance_v2_frontend.views.mainactivity;
 
 import android.view.View;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.surfeillance_v2_frontend.R;
+import com.example.surfeillance_v2_frontend.views.OnItemClickListener;
 import com.google.android.material.textview.MaterialTextView;
 import org.jetbrains.annotations.NotNull;
 

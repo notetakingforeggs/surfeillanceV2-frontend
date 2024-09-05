@@ -1,4 +1,4 @@
-package com.example.surfeillance_v2_frontend.views.mainActivity;
+package com.example.surfeillance_v2_frontend.views.mainactivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.surfeillance_v2_frontend.R;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
+import com.example.surfeillance_v2_frontend.views.OnItemClickListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -19,10 +20,6 @@ public class MainActivityAdaptor extends RecyclerView.Adapter<MainActivityViewho
 
     public MainActivityAdaptor(List<ForecastEntity> forecastEntities) {
         this.forecastEntities = forecastEntities;
-    }
-
-    public void setOnItemCLickListener(OnItemClickListener listener){
-        this.mListener = listener;
     }
 
     @NonNull
@@ -51,5 +48,9 @@ public class MainActivityAdaptor extends RecyclerView.Adapter<MainActivityViewho
         this.forecastEntities.clear();
         this.forecastEntities.addAll(newForecasts);
         notifyDataSetChanged();
+    }
+
+    public void setOnItemCLickListener(OnItemClickListener listener){
+        this.mListener = listener;
     }
 }

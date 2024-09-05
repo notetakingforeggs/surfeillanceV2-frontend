@@ -1,4 +1,5 @@
-package com.example.surfeillance_v2_frontend.views.weeklyForecasts;
+package com.example.surfeillance_v2_frontend.views.weeklyforecasts;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -11,11 +12,14 @@ import com.example.surfeillance_v2_frontend.R;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
 import com.example.surfeillance_v2_frontend.viewmodels.WeeklyForecastViewModelFactory;
 import com.example.surfeillance_v2_frontend.viewmodels.WeeklyForecastsViewModel;
+import com.example.surfeillance_v2_frontend.views.OnItemClickListener;
+import com.example.surfeillance_v2_frontend.views.dayforecasts.DayForecast;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class WeeklyForecastActivity extends AppCompatActivity {
+public class WeeklyForecastActivity extends AppCompatActivity implements OnItemClickListener {
 
     private String TAG = "weekly forecast";
     private WeeklyForecastsViewModel viewModel;
@@ -23,6 +27,7 @@ public class WeeklyForecastActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private long spotID;
     private TextView spotName;
+    private List<ForecastEntity> forecasts;
 
 
     @Override
@@ -35,7 +40,7 @@ public class WeeklyForecastActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.forecast_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adaptor);
-
+        adaptor.setOnItemClickListener(this);
         spotName = findViewById(R.id.location_name);
 
         Intent intent = getIntent();
@@ -48,9 +53,23 @@ public class WeeklyForecastActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<ForecastEntity> forecastEntities) {
                 System.out.println(forecastEntities.size() + " forecasts for one spot?");
+                forecasts = forecastEntities;
                 spotName.setText(forecastEntities.get(0).getName());
                 adaptor.updateForecasts(forecastEntities);
             }
         });
+
+
+    }
+
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(WeeklyForecastActivity.this, DayForecast.class);
+        Bundle extras = new Bundle();
+        extras.putLong("spotID", spotID);
+        extras.putString("date", forecasts.get(position).getDate());
+        startActivity(intent);
+
     }
 }

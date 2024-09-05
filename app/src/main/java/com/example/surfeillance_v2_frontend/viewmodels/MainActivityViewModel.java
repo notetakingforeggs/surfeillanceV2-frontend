@@ -13,28 +13,23 @@ import java.util.List;
 
 public class MainActivityViewModel extends AndroidViewModel {
     private ForecastRepository forecastRepository;
-     private LiveData<List<ForecastEntity>> forecastsLiveData;
-     private LiveData<List<ForecastEntity>> firstDecentsLiveData;
+    private LiveData<List<ForecastEntity>> forecastsLiveData;
+    private LiveData<List<ForecastEntity>> firstDecentsLiveData;
 
-      public String TAG = "MainActivityViewModel";
+    public String TAG = "MainActivityViewModel";
 
     public MainActivityViewModel(Application application) {
         super(application);
         forecastRepository = new ForecastRepository(application);
-     //   forecastsLiveData = forecastRepository.getForecastsLiveData();
         firstDecentsLiveData = forecastRepository.getFirstDecentsLiveData();
-
     }
 
-    // kind of like a getter, to be called by view to get the data to present in the UI
 
-    public LiveData<List<ForecastEntity>> getFirstDecentsLiveData(){
+    public LiveData<List<ForecastEntity>> getFirstDecentsLiveData() {
         return firstDecentsLiveData;
     }
 
-    // maybe rename? also inserts into local db
     public void refreshLocalDB() {
-        Log.i(TAG, "refreshLocalDB: ");
         forecastRepository.retrieveForecastsFromBackend();
     }
 

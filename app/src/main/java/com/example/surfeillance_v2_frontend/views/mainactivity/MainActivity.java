@@ -1,4 +1,4 @@
-package com.example.surfeillance_v2_frontend.views.mainActivity;
+package com.example.surfeillance_v2_frontend.views.mainactivity;
 
 import android.content.Intent;
 import android.util.Log;
@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.surfeillance_v2_frontend.R;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
 import com.example.surfeillance_v2_frontend.viewmodels.MainActivityViewModel;
-import com.example.surfeillance_v2_frontend.views.weeklyForecasts.WeeklyForecastActivity;
-import com.google.android.material.textview.MaterialTextView;
+import com.example.surfeillance_v2_frontend.views.OnItemClickListener;
+import com.example.surfeillance_v2_frontend.views.weeklyforecasts.WeeklyForecastActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,23 +48,22 @@ public class MainActivity extends AppCompatActivity {
 
         // adaptor takes this as the listener asis class now implements the listener interface so is a listener?
         adaptor = new MainActivityAdaptor(new ArrayList<>());
-
         recyclerView.setAdapter(adaptor);
 
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
-
+        // TODO this needs to be put elsewhere, and done on a scheduled basis, alongisde checks for how recently the data in the room db has been updated.
         viewModel.refreshLocalDB();
 
         viewModel.getFirstDecentsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
             @Override
             public void onChanged(List<ForecastEntity> forecastEntities) {
-                for (ForecastEntity entity : forecastEntities) {
-                    System.out.println(entity.getName() + "has decent surf coming up");
-                    forecasts.add(entity);
-                }
+                forecasts.addAll(forecastEntities);
+
+                // this visibility/non visibility should be refactored into the view model
                 apology.setVisibility(forecastEntities.isEmpty() ? View.VISIBLE : View.GONE);
                 recyclerView.setVisibility(forecastEntities.isEmpty() ? View.INVISIBLE : View.VISIBLE);
+
                 adaptor.updateForecasts(forecastEntities);
             }
 
