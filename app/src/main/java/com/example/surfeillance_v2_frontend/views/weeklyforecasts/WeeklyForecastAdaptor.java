@@ -32,7 +32,7 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
     // on creation of the recyclerview and everything else:...
     public ForecastViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         // Inflating the layout of the recycler view item (making it into a view object in memory)
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.weekly_forecast_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.day_forecast_item, parent, false);
 
         // sending this view into the constructor of the recyclerview viewholder so now the various different views from ids
         // are also now object attributes in memory
@@ -87,10 +87,10 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
 
         public ForecastViewHolder(@NonNull @NotNull View itemView, OnItemClickListener listener) {
             super(itemView);
-            forecastDate = itemView.findViewById(R.id.forecast_date);
+            forecastDate = itemView.findViewById(R.id.forecast_time);
             forecast6amDetails = itemView.findViewById(R.id.forecast_6am_details);
             forecast6pmDetails = itemView.findViewById(R.id.forecast_6pm_details);
-            forecast12pmDetails = itemView.findViewById(R.id.forecast_12pm_details);
+            forecast12pmDetails = itemView.findViewById(R.id.windGusts);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
