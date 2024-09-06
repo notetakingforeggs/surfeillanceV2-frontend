@@ -23,26 +23,34 @@ import java.util.stream.Collectors;
 // Lots of unchecked assignments and calls and things to have a look at.
 
 public class ForecastRepository {
-    private LiveData<List<ForecastEntity>> forecastsLiveData;
-    private LiveData<List<ForecastEntity>> firstDecentsLiveData;
-    private LiveData<List<ForecastEntity>> simpleDayForecasts;
-    private Application app;
+    // Logging Tag
+    String TAG = "forecastrepo";
+
+    // utils/tools
     private ForecastService forecastService;
     private ForecastDAO forecastDAO;
     private ForecastEntityBuilder forecastEntityBuilder;
-    private List<ForecastEntity> forecastEntities;
     private final ExecutorService executor = AppExecutors.getInstance().database();
+
+    // params
     private long spotId;
+    private Application app;
+    private String date;
     // hard coding list of spot ids but in future this will be taken either from profile preferences, or x closest spots.
     // imaginging at some point having the ability to send a list of spot ids into the DAO and it will bring back live data for only those spots, but later..
     private List<Long> spotIds = Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L);
-
-   // TODO later this format would be good ot refactor into the daily forecast to enable daylight forecasts only
+    // TODO later this format would be good ot refactor into the daily forecast to enable daylight forecasts only
     private List<String> simpleTimes = Arrays.asList("06:00", "12:00", "18:00");
 
-    String TAG = "forecastrepo";
+    // return data
+    private LiveData<List<ForecastEntity>> forecastsLiveData;
+    private LiveData<List<ForecastEntity>> firstDecentsLiveData;
+    private LiveData<List<ForecastEntity>> simpleDayForecasts;
+    private LiveData<List<ForecastEntity>> hourlyForecastsAtSpotOnDate;
+    private List<ForecastEntity> forecastEntities;
 
 
+    // basic constructor - main
     public ForecastRepository(Application app) {
         SurfeillanceDB db = SurfeillanceDB.getDB(app);
         forecastDAO = db.forecastDAO();
@@ -53,11 +61,21 @@ public class ForecastRepository {
         Log.i(TAG, "ForecastRepository: just after retrofuilt creation");
     }
 
+    // constructor with spot - week forecasts
     public ForecastRepository(Application app, long spotId) {
         SurfeillanceDB db = SurfeillanceDB.getDB(app);
         forecastDAO = db.forecastDAO();
         simpleDayForecasts = forecastDAO.getSimpleDayForecast(spotId, this.simpleTimes);
     }
+
+ // constructor with spot and date - day forecasts
+    public ForecastRepository(Application app, long spotId, String date) {
+        SurfeillanceDB db = SurfeillanceDB.getDB(app);
+        forecastDAO = db.forecastDAO();
+        hourlyForecastsAtSpotOnDate = forecastDAO.getHourlyForecastsAtSpotOnDate(spotId, date);
+    }
+
+
 
     public void retrieveForecastsFromBackend() {
 
@@ -105,5 +123,8 @@ public class ForecastRepository {
     {
         return firstDecentsLiveData;
     }
+
+    public LiveData<List<ForecastEntity>> getHourlyForecastsAtSpotOnDate() { return hourlyForecastsAtSpotOnDate;}
+
 }
 

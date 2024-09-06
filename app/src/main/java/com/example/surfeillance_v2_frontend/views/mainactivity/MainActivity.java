@@ -33,42 +33,48 @@ public class MainActivity extends AppCompatActivity {
     // rather than scheduling updates, check to see if timestamp of forecast data is x hours behind system time, and do api call if so each time new information is accessed?
     // TODO get a sunset/sunrise api in to be able to select only for daylight forecasts
     // maybe move a bunch of stuff ot the backend? and only send what i need to the front?
-    // put the isdecent function in the back
 
-    // USP on this is only see forecsats if there is some surf worth considering otherwise just dont even get into the app.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // inflate the activity
         setContentView(R.layout.activity_main);
 
+        forecasts = new ArrayList<ForecastEntity>();
+
+        // view lookups
         recyclerView = findViewById(R.id.recyclerView);
         apology = findViewById(R.id.apology);
-        forecasts = new ArrayList<ForecastEntity>();
+
+        // set layout manager for recycler view with this as the context
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // adaptor takes this as the listener asis class now implements the listener interface so is a listener?
+        // initialise adaptor and set it to this recycler view
         adaptor = new MainActivityAdaptor(new ArrayList<>());
         recyclerView.setAdapter(adaptor);
 
+        // initialise viewModel
         viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
 
         // TODO this needs to be put elsewhere, and done on a scheduled basis, alongisde checks for how recently the data in the room db has been updated.
         viewModel.refreshLocalDB();
 
+        // this is getting the data from the room db via the viewmodel
         viewModel.getFirstDecentsLiveData().observe(this, new Observer<List<ForecastEntity>>() {
             @Override
             public void onChanged(List<ForecastEntity> forecastEntities) {
                 forecasts.addAll(forecastEntities);
 
-                // this visibility/non visibility should be refactored into the view model
+                // TODO this visibility/non visibility should be refactored into the viewmmodel
                 apology.setVisibility(forecastEntities.isEmpty() ? View.VISIBLE : View.GONE);
                 recyclerView.setVisibility(forecastEntities.isEmpty() ? View.INVISIBLE : View.VISIBLE);
 
+                // when the livedata changes the adaptor to the recycler view updates what is presented.
                 adaptor.updateForecasts(forecastEntities);
             }
 
         });
-
+        // sending a click listener to the adaptor to start the next activity with the int value of the position of the recycler view item clicked on.
         adaptor.setOnItemCLickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {

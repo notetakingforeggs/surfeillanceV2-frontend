@@ -20,7 +20,7 @@ private Long spotId;
         if (modelClass.isAssignableFrom(WeeklyForecastsViewModel.class)) {
             return (T) new WeeklyForecastsViewModel(app, spotId);
         }
-        throw new IllegalArgumentException("Unknown ViewModel class");
+        throw new IllegalArgumentException("Unknown ViewModel class in weekly");
     }
 }
 

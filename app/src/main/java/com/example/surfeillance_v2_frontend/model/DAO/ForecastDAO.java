@@ -19,6 +19,9 @@ public interface ForecastDAO {
     @Query("SELECT * FROM forecasts WHERE spot_id = :spot_id AND time IN (:times)")
     LiveData<List<ForecastEntity>> getSimpleDayForecast(long spot_id, List<String> times);
 
+    @Query("SELECT * FROm forecasts WHERE spot_id = :spot_id and date = :date ")
+    LiveData<List<ForecastEntity>> getHourlyForecastsAtSpotOnDate(long spot_id, String date);
+
     @Insert
     void insertAll(List<ForecastEntity> forecasts);
 
