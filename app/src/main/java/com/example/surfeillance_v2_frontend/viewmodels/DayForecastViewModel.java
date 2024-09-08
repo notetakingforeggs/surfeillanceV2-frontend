@@ -25,6 +25,7 @@ public class DayForecastViewModel extends AndroidViewModel {
 
     public LiveData<List<ForecastEntity>> getHourlyForecastsAtSpotOnDate(){
         return repository.getHourlyForecastsAtSpotOnDate();
+
     }
 
 }

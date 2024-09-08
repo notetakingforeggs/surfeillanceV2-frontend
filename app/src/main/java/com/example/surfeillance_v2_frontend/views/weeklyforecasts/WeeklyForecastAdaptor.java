@@ -57,7 +57,6 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
             DayOfWeek dayOfWeek = localDate.getDayOfWeek();
             forecastViewHolder.forecastDate.setText(dayOfWeek.toString());
         }
-        // TODO there is an issue with out of bounds error for max size
 
         forecastViewHolder.forecast6amDetails.setText(compileTinyForecast(sixAmForecast));
         forecastViewHolder.forecast12pmDetails.setText(compileTinyForecast(twelvePmForecast));
@@ -78,7 +77,8 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
 
     public void updateForecasts(List<ForecastEntity> newForecasts) {
         this.forecastEntities.clear();
-        this.forecastEntities.addAll(newForecasts);
+        this.forecastEntities = newForecasts;
+        //this.forecastEntities.addAll(newForecasts);
         notifyDataSetChanged();
     }
 
@@ -87,10 +87,10 @@ public class WeeklyForecastAdaptor extends RecyclerView.Adapter<WeeklyForecastAd
 
         public ForecastViewHolder(@NonNull @NotNull View itemView, OnItemClickListener listener) {
             super(itemView);
-            forecastDate = itemView.findViewById(R.id.forecast_time);
+            forecastDate = itemView.findViewById(R.id.forecast_date);
             forecast6amDetails = itemView.findViewById(R.id.forecast_6am_details);
             forecast6pmDetails = itemView.findViewById(R.id.forecast_6pm_details);
-            forecast12pmDetails = itemView.findViewById(R.id.windGusts);
+            forecast12pmDetails = itemView.findViewById(R.id.forecast_12pm_details);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

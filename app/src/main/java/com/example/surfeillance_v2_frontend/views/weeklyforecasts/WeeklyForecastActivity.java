@@ -2,6 +2,7 @@ package com.example.surfeillance_v2_frontend.views.weeklyforecasts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -54,7 +55,9 @@ public class WeeklyForecastActivity extends AppCompatActivity implements OnItemC
             public void onChanged(List<ForecastEntity> forecastEntities) {
                 System.out.println(forecastEntities.size() + " forecasts for one spot?");
                 forecasts = forecastEntities;
-                spotName.setText(forecastEntities.get(0).getName());
+                // is there an issue with readiness here? maybe need a wait clause in or smth somehow. Click too fast and breaks perhaps
+                // or maybe it was the room query went through whilst refreshing was happening?
+                spotName.setText(forecastEntities.get(1).getName());
                 adaptor.updateForecasts(forecastEntities);
             }
         });
@@ -69,6 +72,8 @@ public class WeeklyForecastActivity extends AppCompatActivity implements OnItemC
         Bundle extras = new Bundle();
         extras.putLong("spotID", spotID);
         extras.putString("date", forecasts.get(position).getDate());
+        Log.i(TAG, "onItemClick: " + forecasts.get(position).getDate());
+        intent.putExtras(extras);
         startActivity(intent);
 
     }
