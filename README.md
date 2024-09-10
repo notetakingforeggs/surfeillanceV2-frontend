@@ -47,11 +47,11 @@ From this link: https://github.com/notetakingforeggs/surfeillanceV2-backend and 
 
 Open the cloned repositories in IntelliJ IDEA or any other code editor of your choice.
 
-3. ** Ensure you have a suitable Android VM that is set up in your IDE**
+3. **Ensure you have a suitable Android VM that is set up in your IDE**
 
   I have been running mine on a pixel 7 for no particular reason, but just in case it doesnt work on some models, for sure it works on that.
 
-4.  **Build the project using Gradle,**
+4.  **Build the project using Gradle**
 
 In IntelliJ IDEA, the project should automatically import Gradle dependencies. 
 
@@ -60,11 +60,11 @@ In IntelliJ IDEA, the project should automatically import Gradle dependencies.
 
 
  
-1. **Run the Back-End **
+1. **Run the Back-End**
   - ensure the backend is running on port 8080 of localhost. See the readme of the other surfeillance v2 repo for clearer instructions
 
 
-3. **Run the frontEnd**
+2. **Run the frontEnd**
    - please note that there is only funcionality for a selection of surf spot of my choosing (that are convenient for me and friends to attend - broader utility intended in the future)
 
 ## <a id = "built-with"></a>  🛠️ Built With
