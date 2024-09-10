@@ -54,6 +54,8 @@ public class DayForecast extends AppCompatActivity {
         date = intent.getStringExtra("date");
         Log.i(TAG, "onCreate: " + date);
         adaptor = new DayForecastAdaptor(new ArrayList<>());
+        spotTitle = findViewById(R.id.spotTitle);
+        dayDate = findViewById(R.id.dayDate);
 
         recyclerview = findViewById(R.id.hourlyRecyclerView);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
