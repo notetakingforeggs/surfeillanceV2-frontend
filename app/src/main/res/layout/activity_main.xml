@@ -30,12 +30,11 @@
                   app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintTop_toTopOf="parent"
                   app:layout_constraintBottom_toBottomOf="@id/logoImage"
-                  android:text="Outlook..."
-                  android:letterSpacing="0.4"
+                  android:text="Next decent surf @..."
                   android:textAlignment="center"
                   android:gravity="center"
                   android:id="@+id/title"
-                  android:textSize="38sp"
+                  android:textSize="26sp"
         />
 
         <androidx.recyclerview.widget.RecyclerView

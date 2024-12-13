@@ -11,12 +11,14 @@ import org.jetbrains.annotations.NotNull;
 public class MainActivityViewholder extends RecyclerView.ViewHolder {
     public MaterialTextView spotName;
     public MaterialTextView date;
+    public MaterialTextView day;
 
 
     public MainActivityViewholder(@NonNull @NotNull View itemView, OnItemClickListener listener) {
         super(itemView);
         spotName = itemView.findViewById(R.id.spotTitle);
         date = itemView.findViewById(R.id.date);
+        day = itemView.findViewById(R.id.day);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

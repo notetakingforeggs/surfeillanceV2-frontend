@@ -3,16 +3,23 @@ package com.example.surfeillance_v2_frontend.views.mainactivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.surfeillance_v2_frontend.R;
 import com.example.surfeillance_v2_frontend.model.entity.ForecastEntity;
+import com.example.surfeillance_v2_frontend.service.util.DateUtils;
 import com.example.surfeillance_v2_frontend.views.OnItemClickListener;
+
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
-public class MainActivityAdaptor extends RecyclerView.Adapter<MainActivityViewholder>{
+public class MainActivityAdaptor extends RecyclerView.Adapter<MainActivityViewholder> {
 
     private List<ForecastEntity> forecastEntities;
     // 'm' prefix is to indicate that the attribute is a member variable, of the class itself rather than the instantiated object
@@ -36,7 +43,10 @@ public class MainActivityAdaptor extends RecyclerView.Adapter<MainActivityViewho
 
         ForecastEntity forecast = forecastEntities.get(position);
         mainActivityViewholder.spotName.setText(forecast.getName());
-        mainActivityViewholder.date.setText(forecast.getDate());
+        String date = forecast.getDate();
+        mainActivityViewholder.date.setText(date);
+        String day = DateUtils.getDayOfWeek(date);
+        mainActivityViewholder.day.setText(day.toUpperCase());
     }
 
     @Override
@@ -44,13 +54,13 @@ public class MainActivityAdaptor extends RecyclerView.Adapter<MainActivityViewho
         return forecastEntities.size();
     }
 
-    public void updateForecasts(List<ForecastEntity> newForecasts){
+    public void updateForecasts(List<ForecastEntity> newForecasts) {
         this.forecastEntities.clear();
         this.forecastEntities.addAll(newForecasts);
         notifyDataSetChanged();
     }
 
-    public void setOnItemCLickListener(OnItemClickListener listener){
+    public void setOnItemCLickListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
 }
